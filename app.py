@@ -9,7 +9,7 @@ app = Flask(__name__)
 model = joblib.load('random_forest_model.pkl')
 scaler = joblib.load('scaler.pkl')
 
-# Load the sentiment analysis model and vectorizerssss
+# Load the sentiment analysis model and vectorizer
 sentiment_model = load_model("sentiment_model.h5")
 vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
