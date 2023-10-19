@@ -10,7 +10,7 @@ import re
 app = Flask(__name__)
 CORS(app)
 
-# Load the random forest model and scaler
+# Load the random forest model and scalerss
 model = joblib.load('random_forest_model.pkl')
 scaler = joblib.load('scaler.pkl')
 
