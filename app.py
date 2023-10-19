@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # <-- Import CORS
 from tensorflow.keras.models import load_model
 import joblib
 import numpy as np
 
 app = Flask(__name__)
+CORS(app)  # <-- Enable CORS for the entire app
 
 # Load the random forest model and scaler
 model = joblib.load('random_forest_model.pkl')
@@ -13,7 +15,6 @@ scaler = joblib.load('scaler.pkl')
 sentiment_model = load_model("sentiment_model.h5")
 vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
-
 def get_sentiment_class(polarity, threshold=0.1):
     if polarity > threshold:
         return 'positive'
@@ -21,7 +22,6 @@ def get_sentiment_class(polarity, threshold=0.1):
         return 'negative'
     else:
         return 'neutral'
-
 
 @app.route('/predict_price', methods=['POST'])
 def predict():
@@ -35,7 +35,6 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-
 @app.route('/predict_sentiment', methods=['POST'])
 def predict_sentiment():
     content = request.json
@@ -47,7 +46,6 @@ def predict_sentiment():
         "polarity": float(predicted_polarity),
         "sentiment_class": sentiment_class
     })
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
